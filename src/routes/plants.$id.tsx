@@ -15,7 +15,7 @@ export const Route = createFileRoute("/plants/$id")({
 
 function PlantDetailPage() {
   const { plant } = Route.useLoaderData();
-  const meta = statusMeta[plant.status];
+  const meta = statusMeta[plant.status as keyof typeof statusMeta];
   return (
     <div>
       <div className="relative h-72">
