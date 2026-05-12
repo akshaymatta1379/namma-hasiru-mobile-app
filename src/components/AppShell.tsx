@@ -59,7 +59,7 @@ export function AppShell() {
                 return (
                   <li key={to} className="flex justify-center">
                     <Link
-                      to={to}
+                      to={to as "/"}
                       className={cn(
                         "flex flex-col items-center gap-1 rounded-xl px-3 py-2 text-[10px] font-medium transition",
                         active ? "text-primary" : "text-muted-foreground",
