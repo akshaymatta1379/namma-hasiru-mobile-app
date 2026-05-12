@@ -2,13 +2,13 @@ import { Link, Outlet, useLocation } from "@tanstack/react-router";
 import { Home, Trees, MapPin, Leaf, User, Plus, Bell } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const tabs = [
+const tabs: { to: string; label: string; icon: typeof Home; exact?: boolean }[] = [
   { to: "/", label: "Home", icon: Home, exact: true },
   { to: "/plants", label: "Plants", icon: Trees },
   { to: "/map", label: "Map", icon: MapPin },
   { to: "/species", label: "Species", icon: Leaf },
   { to: "/profile", label: "Profile", icon: User },
-] as const;
+];
 
 export function AppShell() {
   const { pathname } = useLocation();
