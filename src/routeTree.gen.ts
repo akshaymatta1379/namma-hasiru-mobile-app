@@ -9,38 +9,199 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SpeciesRouteImport } from './routes/species'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as PlantsRouteImport } from './routes/plants'
+import { Route as NotificationsRouteImport } from './routes/notifications'
+import { Route as MapRouteImport } from './routes/map'
+import { Route as CommunityRouteImport } from './routes/community'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PlantsIdRouteImport } from './routes/plants.$id'
+import { Route as PlantNewRouteImport } from './routes/plant.new'
+import { Route as PlantsIdUpdateRouteImport } from './routes/plants.$id.update'
 
+const SpeciesRoute = SpeciesRouteImport.update({
+  id: '/species',
+  path: '/species',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlantsRoute = PlantsRouteImport.update({
+  id: '/plants',
+  path: '/plants',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotificationsRoute = NotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MapRoute = MapRouteImport.update({
+  id: '/map',
+  path: '/map',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommunityRoute = CommunityRouteImport.update({
+  id: '/community',
+  path: '/community',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PlantsIdRoute = PlantsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => PlantsRoute,
+} as any)
+const PlantNewRoute = PlantNewRouteImport.update({
+  id: '/plant/new',
+  path: '/plant/new',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlantsIdUpdateRoute = PlantsIdUpdateRouteImport.update({
+  id: '/update',
+  path: '/update',
+  getParentRoute: () => PlantsIdRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/community': typeof CommunityRoute
+  '/map': typeof MapRoute
+  '/notifications': typeof NotificationsRoute
+  '/plants': typeof PlantsRouteWithChildren
+  '/profile': typeof ProfileRoute
+  '/species': typeof SpeciesRoute
+  '/plant/new': typeof PlantNewRoute
+  '/plants/$id': typeof PlantsIdRouteWithChildren
+  '/plants/$id/update': typeof PlantsIdUpdateRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/community': typeof CommunityRoute
+  '/map': typeof MapRoute
+  '/notifications': typeof NotificationsRoute
+  '/plants': typeof PlantsRouteWithChildren
+  '/profile': typeof ProfileRoute
+  '/species': typeof SpeciesRoute
+  '/plant/new': typeof PlantNewRoute
+  '/plants/$id': typeof PlantsIdRouteWithChildren
+  '/plants/$id/update': typeof PlantsIdUpdateRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/community': typeof CommunityRoute
+  '/map': typeof MapRoute
+  '/notifications': typeof NotificationsRoute
+  '/plants': typeof PlantsRouteWithChildren
+  '/profile': typeof ProfileRoute
+  '/species': typeof SpeciesRoute
+  '/plant/new': typeof PlantNewRoute
+  '/plants/$id': typeof PlantsIdRouteWithChildren
+  '/plants/$id/update': typeof PlantsIdUpdateRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/community'
+    | '/map'
+    | '/notifications'
+    | '/plants'
+    | '/profile'
+    | '/species'
+    | '/plant/new'
+    | '/plants/$id'
+    | '/plants/$id/update'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/community'
+    | '/map'
+    | '/notifications'
+    | '/plants'
+    | '/profile'
+    | '/species'
+    | '/plant/new'
+    | '/plants/$id'
+    | '/plants/$id/update'
+  id:
+    | '__root__'
+    | '/'
+    | '/community'
+    | '/map'
+    | '/notifications'
+    | '/plants'
+    | '/profile'
+    | '/species'
+    | '/plant/new'
+    | '/plants/$id'
+    | '/plants/$id/update'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CommunityRoute: typeof CommunityRoute
+  MapRoute: typeof MapRoute
+  NotificationsRoute: typeof NotificationsRoute
+  PlantsRoute: typeof PlantsRouteWithChildren
+  ProfileRoute: typeof ProfileRoute
+  SpeciesRoute: typeof SpeciesRoute
+  PlantNewRoute: typeof PlantNewRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/species': {
+      id: '/species'
+      path: '/species'
+      fullPath: '/species'
+      preLoaderRoute: typeof SpeciesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/plants': {
+      id: '/plants'
+      path: '/plants'
+      fullPath: '/plants'
+      preLoaderRoute: typeof PlantsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notifications': {
+      id: '/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof NotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/map': {
+      id: '/map'
+      path: '/map'
+      fullPath: '/map'
+      preLoaderRoute: typeof MapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/community': {
+      id: '/community'
+      path: '/community'
+      fullPath: '/community'
+      preLoaderRoute: typeof CommunityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +209,63 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/plants/$id': {
+      id: '/plants/$id'
+      path: '/$id'
+      fullPath: '/plants/$id'
+      preLoaderRoute: typeof PlantsIdRouteImport
+      parentRoute: typeof PlantsRoute
+    }
+    '/plant/new': {
+      id: '/plant/new'
+      path: '/plant/new'
+      fullPath: '/plant/new'
+      preLoaderRoute: typeof PlantNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/plants/$id/update': {
+      id: '/plants/$id/update'
+      path: '/update'
+      fullPath: '/plants/$id/update'
+      preLoaderRoute: typeof PlantsIdUpdateRouteImport
+      parentRoute: typeof PlantsIdRoute
+    }
   }
 }
 
+interface PlantsIdRouteChildren {
+  PlantsIdUpdateRoute: typeof PlantsIdUpdateRoute
+}
+
+const PlantsIdRouteChildren: PlantsIdRouteChildren = {
+  PlantsIdUpdateRoute: PlantsIdUpdateRoute,
+}
+
+const PlantsIdRouteWithChildren = PlantsIdRoute._addFileChildren(
+  PlantsIdRouteChildren,
+)
+
+interface PlantsRouteChildren {
+  PlantsIdRoute: typeof PlantsIdRouteWithChildren
+}
+
+const PlantsRouteChildren: PlantsRouteChildren = {
+  PlantsIdRoute: PlantsIdRouteWithChildren,
+}
+
+const PlantsRouteWithChildren =
+  PlantsRoute._addFileChildren(PlantsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CommunityRoute: CommunityRoute,
+  MapRoute: MapRoute,
+  NotificationsRoute: NotificationsRoute,
+  PlantsRoute: PlantsRouteWithChildren,
+  ProfileRoute: ProfileRoute,
+  SpeciesRoute: SpeciesRoute,
+  PlantNewRoute: PlantNewRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
