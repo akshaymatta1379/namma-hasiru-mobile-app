@@ -16,15 +16,27 @@ const badges = [
 ];
 
 function ProfilePage() {
+  const { user, signOut } = useAuth();
+  const displayName =
+    (user?.user_metadata?.display_name as string | undefined) ||
+    (user?.user_metadata?.full_name as string | undefined) ||
+    user?.email?.split("@")[0] ||
+    userStats.name;
+
+  const handleSignOut = async () => {
+    await signOut();
+    toast.success("Signed out");
+  };
+
   return (
     <div className="px-5 pt-4 pb-4">
       <div className="flex items-center gap-4">
         <div className="grid h-16 w-16 place-items-center rounded-full bg-[var(--gradient-forest)] font-display text-2xl font-bold text-primary-foreground">
-          {userStats.name[0]}
+          {displayName[0]?.toUpperCase()}
         </div>
         <div className="flex-1">
-          <h1 className="font-display text-xl font-bold">{userStats.name}</h1>
-          <p className="text-xs text-muted-foreground">{userStats.community} · Rank #{userStats.rank}</p>
+          <h1 className="font-display text-xl font-bold">{displayName}</h1>
+          <p className="text-xs text-muted-foreground">{user?.email ?? userStats.community} · Rank #{userStats.rank}</p>
         </div>
       </div>
 
@@ -52,7 +64,7 @@ function ProfilePage() {
       <section className="mt-6 space-y-1 rounded-2xl border border-border bg-card p-2">
         <Row icon={Bell} label="Notification settings" />
         <Row icon={Settings} label="App preferences" />
-        <Row icon={LogOut} label="Sign out" danger />
+        <Row icon={LogOut} label="Sign out" danger onClick={handleSignOut} />
       </section>
 
       <p className="mt-6 text-center text-[10px] text-muted-foreground">Namma Hasiru · v0.1 · Made with 🌿 in Bengaluru</p>
