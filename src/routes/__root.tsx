@@ -1,6 +1,8 @@
-import { createRootRouteWithContext, Outlet, HeadContent, Scripts } from "@tanstack/react-router";
+import { createRootRouteWithContext, Outlet, HeadContent, Scripts, useLocation, useNavigate } from "@tanstack/react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { AppShell } from "@/components/AppShell";
+import { AuthProvider, useAuth } from "@/hooks/use-auth";
 import { Toaster } from "@/components/ui/sonner";
 import appCss from "../styles.css?url";
 
@@ -57,8 +59,32 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
     <QueryClientProvider client={queryClient}>
-      <AppShell />
+      <AuthProvider>
+        <AuthGate />
+      </AuthProvider>
       <Toaster position="top-center" />
     </QueryClientProvider>
   );
+}
+
+function AuthGate() {
+  const { user, loading } = useAuth();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loading) return;
+    if (!user && pathname !== "/auth") navigate({ to: "/auth" });
+    if (user && pathname === "/auth") navigate({ to: "/" });
+  }, [user, loading, pathname, navigate]);
+
+  if (loading) {
+    return (
+      <div className="grid min-h-screen place-items-center bg-background">
+        <div className="h-10 w-10 animate-pulse rounded-full bg-[var(--gradient-forest)]" />
+      </div>
+    );
+  }
+  if (!user && pathname !== "/auth") return null;
+  return <AppShell />;
 }
