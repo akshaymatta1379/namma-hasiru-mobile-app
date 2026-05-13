@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Award, Settings, Bell, LogOut, ChevronRight, TreeDeciduous, Target, Calendar } from "lucide-react";
+import { toast } from "sonner";
 import { userStats } from "@/lib/mock-data";
+import { useAuth } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/profile")({ component: ProfilePage });
 
