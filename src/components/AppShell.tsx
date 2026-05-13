@@ -12,7 +12,7 @@ const tabs: { to: string; label: string; icon: typeof Home; exact?: boolean }[] 
 
 export function AppShell() {
   const { pathname } = useLocation();
-  const hideChrome = pathname.startsWith("/plant/new") || pathname.includes("/update");
+  const hideChrome = pathname.startsWith("/plant/new") || pathname.includes("/update") || pathname === "/auth";
 
   return (
     <div className="mx-auto flex min-h-screen max-w-md flex-col bg-background">
