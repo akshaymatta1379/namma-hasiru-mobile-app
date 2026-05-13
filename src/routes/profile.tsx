@@ -82,9 +82,9 @@ function Stat({ icon: Icon, value, label }: { icon: typeof Award; value: string 
   );
 }
 
-function Row({ icon: Icon, label, danger }: { icon: typeof Award; label: string; danger?: boolean }) {
+function Row({ icon: Icon, label, danger, onClick }: { icon: typeof Award; label: string; danger?: boolean; onClick?: () => void }) {
   return (
-    <button className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-medium ${danger ? "text-destructive" : "text-foreground"}`}>
+    <button onClick={onClick} className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-medium ${danger ? "text-destructive" : "text-foreground"}`}>
       <Icon className="h-5 w-5" />
       <span className="flex-1">{label}</span>
       <ChevronRight className="h-4 w-4 text-muted-foreground" />
