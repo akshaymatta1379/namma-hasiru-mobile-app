@@ -2,18 +2,28 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { TrendingUp, Sprout, CalendarCheck, Award, ChevronRight, CloudSun, Trees } from "lucide-react";
 import { mockPlants, userStats, communityFeed } from "@/lib/mock-data";
 import { PlantCard } from "@/components/PlantCard";
+import { useAuth } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/")({ component: HomePage });
 
 function HomePage() {
+  const { user } = useAuth();
+  const displayName =
+    (user?.user_metadata?.display_name as string | undefined) ||
+    (user?.user_metadata?.full_name as string | undefined) ||
+    user?.email?.split("@")[0] ||
+    userStats.name;
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : hour < 21 ? "Good evening" : "Namaste";
+  const firstName = displayName.split(/[\s.@]/)[0];
   const checkupCount = mockPlants.filter((p) => p.needsCheckup).length;
   return (
     <div className="space-y-6 px-5 pt-4">
       {/* Welcome */}
       <section>
-        <p className="text-sm text-muted-foreground">Namaste,</p>
-        <h1 className="font-display text-3xl font-bold leading-tight">
-          {userStats.name} <span className="text-primary">🌱</span>
+        <p className="text-sm text-muted-foreground">{greeting},</p>
+        <h1 className="font-display text-3xl font-bold leading-tight capitalize">
+          {firstName} <span className="text-primary">🌱</span>
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
           You've kept <span className="font-semibold text-foreground">{userStats.treesPlanted} trees</span> alive across {userStats.daysActive} days.
