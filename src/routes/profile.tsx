@@ -1,5 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Award, Settings, Bell, LogOut, ChevronRight, TreeDeciduous, Target, Calendar } from "lucide-react";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { Award, Settings, Bell, LogOut, ChevronRight, TreeDeciduous, Target, Calendar, KeyRound } from "lucide-react";
 import { toast } from "sonner";
 import { userStats } from "@/lib/mock-data";
 import { useAuth } from "@/hooks/use-auth";
@@ -17,6 +17,7 @@ const badges = [
 
 function ProfilePage() {
   const { user, signOut } = useAuth();
+  const navigate = useNavigate();
   const displayName =
     (user?.user_metadata?.display_name as string | undefined) ||
     (user?.user_metadata?.full_name as string | undefined) ||
@@ -26,6 +27,7 @@ function ProfilePage() {
   const handleSignOut = async () => {
     await signOut();
     toast.success("Signed out");
+    navigate({ to: "/auth" });
   };
 
   return (
