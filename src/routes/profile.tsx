@@ -51,21 +51,22 @@ function ProfilePage() {
       <section className="mt-6">
         <div className="flex items-center justify-between">
           <h2 className="flex items-center gap-2 font-display text-lg font-semibold"><Award className="h-5 w-5 text-sunset" /> Achievements</h2>
-          <span className="text-xs text-muted-foreground">{userStats.achievements} earned</span>
+          <Link to="/achievements" className="text-xs font-semibold text-primary">See all</Link>
         </div>
         <div className="mt-3 grid grid-cols-3 gap-3">
           {badges.map((b, i) => (
-            <div key={i} className="flex flex-col items-center gap-1 rounded-2xl border border-border bg-card p-3">
+            <Link to="/achievements" key={i} className="flex flex-col items-center gap-1 rounded-2xl border border-border bg-card p-3 transition active:scale-95">
               <span className="text-2xl">{b.icon}</span>
               <span className="text-center text-[10px] font-medium text-muted-foreground">{b.label}</span>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
 
       <section className="mt-6 space-y-1 rounded-2xl border border-border bg-card p-2">
-        <Row icon={Bell} label="Notification settings" />
-        <Row icon={Settings} label="App preferences" />
+        <Row icon={Bell} label="Notification settings" to="/notification-settings" />
+        <Row icon={Settings} label="App preferences" to="/preferences" />
+        <Row icon={KeyRound} label="Change password" to="/forgot-password" />
         <Row icon={LogOut} label="Sign out" danger onClick={handleSignOut} />
       </section>
 
@@ -84,12 +85,15 @@ function Stat({ icon: Icon, value, label }: { icon: typeof Award; value: string 
   );
 }
 
-function Row({ icon: Icon, label, danger, onClick }: { icon: typeof Award; label: string; danger?: boolean; onClick?: () => void }) {
-  return (
-    <button onClick={onClick} className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-medium ${danger ? "text-destructive" : "text-foreground"}`}>
+function Row({ icon: Icon, label, danger, onClick, to }: { icon: typeof Award; label: string; danger?: boolean; onClick?: () => void; to?: string }) {
+  const cls = `flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-medium ${danger ? "text-destructive" : "text-foreground"}`;
+  const inner = (
+    <>
       <Icon className="h-5 w-5" />
       <span className="flex-1">{label}</span>
       <ChevronRight className="h-4 w-4 text-muted-foreground" />
-    </button>
+    </>
   );
+  if (to) return <Link to={to} className={cls}>{inner}</Link>;
+  return <button onClick={onClick} className={cls}>{inner}</button>;
 }
