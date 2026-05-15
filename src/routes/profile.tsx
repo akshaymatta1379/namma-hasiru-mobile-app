@@ -94,6 +94,6 @@ function Row({ icon: Icon, label, danger, onClick, to }: { icon: typeof Award; l
       <ChevronRight className="h-4 w-4 text-muted-foreground" />
     </>
   );
-  if (to) return <Link to={to} className={cls}>{inner}</Link>;
+  if (to) return <Link to={to as "/achievements"} className={cls}>{inner}</Link>;
   return <button onClick={onClick} className={cls}>{inner}</button>;
 }
