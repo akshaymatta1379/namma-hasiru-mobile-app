@@ -74,7 +74,8 @@ function AuthGate() {
 
   useEffect(() => {
     if (loading) return;
-    if (!user && pathname !== "/auth") navigate({ to: "/auth" });
+    const publicPaths = ["/auth", "/forgot-password", "/reset-password"];
+    if (!user && !publicPaths.includes(pathname)) navigate({ to: "/auth" });
     if (user && pathname === "/auth") navigate({ to: "/" });
   }, [user, loading, pathname, navigate]);
 
@@ -85,6 +86,7 @@ function AuthGate() {
       </div>
     );
   }
-  if (!user && pathname !== "/auth") return null;
+  const publicPaths = ["/auth", "/forgot-password", "/reset-password"];
+  if (!user && !publicPaths.includes(pathname)) return null;
   return <AppShell />;
 }
