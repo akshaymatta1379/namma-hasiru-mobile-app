@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { TrendingUp, Sprout, CalendarCheck, Award, ChevronRight, CloudSun, Trees } from "lucide-react";
+import { TrendingUp, Sprout, CalendarCheck, Award, ChevronRight, CloudSun, Trees, Bell } from "lucide-react";
 import { mockPlants, userStats, communityFeed } from "@/lib/mock-data";
 import { PlantCard } from "@/components/PlantCard";
 import { useAuth } from "@/hooks/use-auth";
@@ -17,6 +17,7 @@ function HomePage() {
   const greeting = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : hour < 21 ? "Good evening" : "Namaste";
   const firstName = displayName.split(/[\s.@]/)[0];
   const checkupCount = mockPlants.filter((p) => p.needsCheckup).length;
+  const ninetyDayPlants = mockPlants.filter((p) => p.daysOld >= 85 && p.daysOld <= 100);
   return (
     <div className="space-y-6 px-5 pt-4">
       {/* Welcome */}
@@ -46,6 +47,22 @@ function HomePage() {
           <Stat icon={Award} value={userStats.achievements} label="Badges" />
         </div>
       </section>
+
+      {/* 90-day reminder */}
+      {ninetyDayPlants.length > 0 && (
+        <Link to="/notifications" className="flex items-start gap-3 rounded-2xl border border-sunset/40 bg-sunset/10 p-4">
+          <div className="grid h-10 w-10 flex-shrink-0 place-items-center rounded-xl bg-sunset/20 text-sunset">
+            <Bell className="h-5 w-5" />
+          </div>
+          <div className="flex-1">
+            <p className="font-display text-sm font-semibold">{ninetyDayPlants.length} sapling{ninetyDayPlants.length > 1 ? "s" : ""} hitting the 90-day mark</p>
+            <p className="mt-0.5 text-xs text-muted-foreground">
+              {ninetyDayPlants.map((p) => p.species).join(", ")} — log a check-up to confirm survival.
+            </p>
+          </div>
+          <ChevronRight className="h-4 w-4 text-muted-foreground" />
+        </Link>
+      )}
 
       {/* Weather */}
       <section className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4">
