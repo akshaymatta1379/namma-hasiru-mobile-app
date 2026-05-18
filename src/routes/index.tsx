@@ -32,7 +32,7 @@ function HomePage() {
       </section>
 
       {/* Hero stat card */}
-      <section className="overflow-hidden rounded-3xl bg-[var(--gradient-forest)] p-5 text-primary-foreground shadow-[var(--shadow-soft)]">
+      <section className="overflow-hidden rounded-3xl bg-[image:var(--gradient-forest)] p-5 text-primary-foreground shadow-[var(--shadow-soft)]">
         <div className="flex items-start justify-between">
           <div>
             <p className="text-xs uppercase tracking-widest opacity-80">Survival rate</p>
