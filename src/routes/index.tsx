@@ -50,7 +50,7 @@ function HomePage() {
 
       {/* 90-day reminder */}
       {ninetyDayPlants.length > 0 && (
-        <Link to="/notifications" className="flex items-start gap-3 rounded-2xl border border-sunset/40 bg-sunset/10 p-4">
+        <Link to="/notification-settings" className="flex items-start gap-3 rounded-2xl border border-sunset/40 bg-sunset/10 p-4">
           <div className="grid h-10 w-10 flex-shrink-0 place-items-center rounded-xl bg-sunset/20 text-sunset">
             <Bell className="h-5 w-5" />
           </div>
