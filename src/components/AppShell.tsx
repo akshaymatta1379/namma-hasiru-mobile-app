@@ -1,5 +1,5 @@
-import { Link, Outlet, useLocation } from "@tanstack/react-router";
-import { Home, Trees, MapPin, Leaf, User, Plus, Bell } from "lucide-react";
+import { Link, Outlet, useLocation, useRouter } from "@tanstack/react-router";
+import { Home, Trees, MapPin, Leaf, User, Plus, Bell, ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const tabs: { to: string; label: string; icon: typeof Home; exact?: boolean }[] = [
