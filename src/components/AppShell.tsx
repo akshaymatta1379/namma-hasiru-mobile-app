@@ -39,6 +39,7 @@ export function AppShell() {
               <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Plant. Track. Grow.</p>
             </div>
           </Link>
+          </div>
           <Link
             to="/notifications"
             className="relative grid h-10 w-10 place-items-center rounded-full border border-border bg-card text-foreground"
