@@ -2,6 +2,7 @@ import { createRootRouteWithContext, Outlet, HeadContent, Scripts, useLocation, 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { AppShell } from "@/components/AppShell";
+import { SplashScreen } from "@/components/SplashScreen";
 import { AuthProvider, useAuth } from "@/hooks/use-auth";
 import { Toaster } from "@/components/ui/sonner";
 import appCss from "../styles.css?url";
@@ -60,7 +61,9 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <AuthGate />
+        <SplashScreen>
+          <AuthGate />
+        </SplashScreen>
       </AuthProvider>
       <Toaster position="top-center" />
     </QueryClientProvider>
