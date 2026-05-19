@@ -22,13 +22,22 @@ export function AppShell() {
         <header className="sticky top-0 z-30 flex items-center justify-between gap-2 border-b border-border/60 bg-background/90 px-5 py-3 backdrop-blur">
           <div className="flex items-center gap-2">
             {showBack && (
-              <button
-                onClick={() => router.history.back()}
-                aria-label="Go back"
-                className="grid h-9 w-9 place-items-center rounded-full border border-border bg-card text-foreground active:scale-95"
-              >
-                <ArrowLeft className="h-5 w-5" />
-              </button>
+              <>
+                <button
+                  onClick={() => router.history.back()}
+                  aria-label="Go back"
+                  className="grid h-9 w-9 place-items-center rounded-full border border-border bg-card text-foreground active:scale-95"
+                >
+                  <ArrowLeft className="h-5 w-5" />
+                </button>
+                <Link
+                  to="/"
+                  aria-label="Home"
+                  className="grid h-9 w-9 place-items-center rounded-full border border-border bg-card text-foreground active:scale-95"
+                >
+                  <Home className="h-5 w-5" />
+                </Link>
+              </>
             )}
             <Link to="/" className="flex items-center gap-2">
             <div className="grid h-9 w-9 place-items-center rounded-xl bg-[var(--gradient-forest)] text-primary-foreground shadow-[var(--shadow-soft)]">
