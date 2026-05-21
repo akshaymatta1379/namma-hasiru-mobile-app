@@ -77,17 +77,42 @@ function NewPlantPage() {
           </button>
         )}
 
-        {/* GPS */}
-        <div className="flex items-center gap-3 rounded-2xl border border-border bg-card p-3">
-          <div className="grid h-11 w-11 place-items-center rounded-xl bg-leaf text-leaf-foreground">
-            <MapPin className="h-5 w-5" />
+        {/* Location (manual) */}
+        <section>
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Where did you plant it?</p>
+          <div className="mt-2 flex items-center gap-2 rounded-2xl border border-border bg-card px-3 py-2.5">
+            <MapPin className="h-5 w-5 text-primary" />
+            <input
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              placeholder="e.g. Cubbon Park, Bengaluru"
+              className="flex-1 bg-transparent text-sm outline-none"
+            />
           </div>
-          <div className="flex-1">
-            <p className="font-display text-sm font-semibold">Location locked</p>
-            <p className="font-mono text-[11px] text-muted-foreground">12.9763, 77.5929 · ±4m</p>
+          <div className="mt-2 flex items-center gap-2 rounded-2xl border border-border bg-card px-3 py-2.5">
+            <span className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">GPS</span>
+            <input
+              value={coords}
+              onChange={(e) => setCoords(e.target.value)}
+              placeholder="lat, lng (optional)"
+              className="flex-1 bg-transparent font-mono text-xs outline-none"
+            />
+            <button
+              type="button"
+              onClick={() => {
+                if (!navigator.geolocation) { toast.error("Geolocation unavailable"); return; }
+                navigator.geolocation.getCurrentPosition(
+                  (pos) => setCoords(`${pos.coords.latitude.toFixed(4)}, ${pos.coords.longitude.toFixed(4)}`),
+                  () => toast.error("Could not get GPS location"),
+                );
+              }}
+              className="rounded-full bg-accent px-2.5 py-1 text-[10px] font-semibold text-primary"
+            >
+              Use GPS
+            </button>
           </div>
-          <span className="rounded-full bg-success/15 px-2 py-0.5 text-[10px] font-medium text-success">GPS</span>
-        </div>
+        </section>
+
 
         {/* Type */}
         <section>
