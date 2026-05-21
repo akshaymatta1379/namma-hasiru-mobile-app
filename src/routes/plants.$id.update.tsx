@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ArrowLeft, Camera, Ruler } from "lucide-react";
 import { mockPlants, PlantStatus, statusMeta } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
