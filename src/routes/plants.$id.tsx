@@ -44,6 +44,22 @@ function PlantDetailPage() {
           </div>
         )}
 
+        <Link
+          to="/plants/$id/care"
+          params={{ id: plant.id }}
+          className="flex items-center gap-3 rounded-2xl border border-primary/30 bg-[var(--gradient-earth)] p-4"
+        >
+          <div className="grid h-11 w-11 place-items-center rounded-xl bg-[var(--gradient-forest)] text-primary-foreground shadow-[var(--shadow-soft)]">
+            <Sparkles className="h-5 w-5" />
+          </div>
+          <div className="flex-1">
+            <p className="font-display text-sm font-semibold">Ask AI Care Assistant</p>
+            <p className="text-[11px] text-muted-foreground">Watering, soil & pest tips for this tree</p>
+          </div>
+          <span className="text-muted-foreground">›</span>
+        </Link>
+
+
         <section className="grid grid-cols-2 gap-3">
           <InfoTile icon={Calendar} label="Planted" value={new Date(plant.plantedAt).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" })} />
           <InfoTile icon={Sprout} label="Type" value={plant.type === "seed" ? "Seed ball" : "Sapling"} />
