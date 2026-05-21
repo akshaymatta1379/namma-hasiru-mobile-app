@@ -25,6 +25,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as PlantsIdRouteImport } from './routes/plants.$id'
 import { Route as PlantNewRouteImport } from './routes/plant.new'
 import { Route as PlantsIdUpdateRouteImport } from './routes/plants.$id.update'
+import { Route as PlantsIdCareRouteImport } from './routes/plants.$id.care'
 
 const SpeciesRoute = SpeciesRouteImport.update({
   id: '/species',
@@ -106,6 +107,11 @@ const PlantsIdUpdateRoute = PlantsIdUpdateRouteImport.update({
   path: '/update',
   getParentRoute: () => PlantsIdRoute,
 } as any)
+const PlantsIdCareRoute = PlantsIdCareRouteImport.update({
+  id: '/care',
+  path: '/care',
+  getParentRoute: () => PlantsIdRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -123,6 +129,7 @@ export interface FileRoutesByFullPath {
   '/species': typeof SpeciesRoute
   '/plant/new': typeof PlantNewRoute
   '/plants/$id': typeof PlantsIdRouteWithChildren
+  '/plants/$id/care': typeof PlantsIdCareRoute
   '/plants/$id/update': typeof PlantsIdUpdateRoute
 }
 export interface FileRoutesByTo {
@@ -141,6 +148,7 @@ export interface FileRoutesByTo {
   '/species': typeof SpeciesRoute
   '/plant/new': typeof PlantNewRoute
   '/plants/$id': typeof PlantsIdRouteWithChildren
+  '/plants/$id/care': typeof PlantsIdCareRoute
   '/plants/$id/update': typeof PlantsIdUpdateRoute
 }
 export interface FileRoutesById {
@@ -160,6 +168,7 @@ export interface FileRoutesById {
   '/species': typeof SpeciesRoute
   '/plant/new': typeof PlantNewRoute
   '/plants/$id': typeof PlantsIdRouteWithChildren
+  '/plants/$id/care': typeof PlantsIdCareRoute
   '/plants/$id/update': typeof PlantsIdUpdateRoute
 }
 export interface FileRouteTypes {
@@ -180,6 +189,7 @@ export interface FileRouteTypes {
     | '/species'
     | '/plant/new'
     | '/plants/$id'
+    | '/plants/$id/care'
     | '/plants/$id/update'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -198,6 +208,7 @@ export interface FileRouteTypes {
     | '/species'
     | '/plant/new'
     | '/plants/$id'
+    | '/plants/$id/care'
     | '/plants/$id/update'
   id:
     | '__root__'
@@ -216,6 +227,7 @@ export interface FileRouteTypes {
     | '/species'
     | '/plant/new'
     | '/plants/$id'
+    | '/plants/$id/care'
     | '/plants/$id/update'
   fileRoutesById: FileRoutesById
 }
@@ -350,14 +362,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlantsIdUpdateRouteImport
       parentRoute: typeof PlantsIdRoute
     }
+    '/plants/$id/care': {
+      id: '/plants/$id/care'
+      path: '/care'
+      fullPath: '/plants/$id/care'
+      preLoaderRoute: typeof PlantsIdCareRouteImport
+      parentRoute: typeof PlantsIdRoute
+    }
   }
 }
 
 interface PlantsIdRouteChildren {
+  PlantsIdCareRoute: typeof PlantsIdCareRoute
   PlantsIdUpdateRoute: typeof PlantsIdUpdateRoute
 }
 
 const PlantsIdRouteChildren: PlantsIdRouteChildren = {
+  PlantsIdCareRoute: PlantsIdCareRoute,
   PlantsIdUpdateRoute: PlantsIdUpdateRoute,
 }
 
