@@ -173,7 +173,12 @@ function NewPlantPage() {
         </section>
 
         <button
-          onClick={() => { toast.success("Tree registered! Reminder set for 90 days. 🌳"); navigate({ to: "/plants" }); }}
+          onClick={() => {
+            if (!photo) { toast.error("Add a photo first"); return; }
+            if (!location.trim()) { toast.error("Please enter the planting location"); return; }
+            toast.success("Tree registered! Reminder set for 90 days. 🌳");
+            navigate({ to: "/plants" });
+          }}
           className="w-full rounded-full bg-[var(--gradient-forest)] py-3.5 font-display text-base font-semibold text-primary-foreground shadow-[var(--shadow-soft)]"
         >
           Register plant
