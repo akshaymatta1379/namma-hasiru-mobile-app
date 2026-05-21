@@ -35,15 +35,45 @@ function NewPlantPage() {
 
       <div className="space-y-5 px-5 pt-4">
         {/* Camera */}
-        <button className="grid aspect-[4/3] w-full place-items-center rounded-3xl border-2 border-dashed border-primary/40 bg-[var(--gradient-earth)]">
-          <div className="text-center">
-            <div className="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-primary text-primary-foreground shadow-[var(--shadow-soft)]">
-              <Camera className="h-7 w-7" />
-            </div>
-            <p className="mt-3 font-display text-base font-semibold">Take a photo</p>
-            <p className="text-xs text-muted-foreground">Capture sapling + surroundings</p>
+        <input
+          ref={fileRef}
+          type="file"
+          accept="image/*"
+          capture="environment"
+          className="hidden"
+          onChange={(e) => onPick(e.target.files?.[0])}
+        />
+        {photo ? (
+          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl border border-border">
+            <img src={photo} alt="Captured sapling" className="h-full w-full object-cover" />
+            <button
+              onClick={() => setPhoto(null)}
+              className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-black/60 text-white"
+              aria-label="Remove photo"
+            >
+              <X className="h-4 w-4" />
+            </button>
+            <button
+              onClick={() => fileRef.current?.click()}
+              className="absolute bottom-3 right-3 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-foreground"
+            >
+              Retake
+            </button>
           </div>
-        </button>
+        ) : (
+          <button
+            onClick={() => fileRef.current?.click()}
+            className="grid aspect-[4/3] w-full place-items-center rounded-3xl border-2 border-dashed border-primary/40 bg-[var(--gradient-earth)]"
+          >
+            <div className="text-center">
+              <div className="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-primary text-primary-foreground shadow-[var(--shadow-soft)]">
+                <Camera className="h-7 w-7" />
+              </div>
+              <p className="mt-3 font-display text-base font-semibold">Take a photo</p>
+              <p className="text-xs text-muted-foreground">Capture sapling + surroundings</p>
+            </div>
+          </button>
+        )}
 
         {/* GPS */}
         <div className="flex items-center gap-3 rounded-2xl border border-border bg-card p-3">
