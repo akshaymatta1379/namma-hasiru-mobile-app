@@ -15,6 +15,16 @@ function UpdatePage() {
   const navigate = useNavigate();
   const [status, setStatus] = useState<PlantStatus>("growing");
   const [height, setHeight] = useState("");
+  const [newPhoto, setNewPhoto] = useState<string | null>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+  const onPick = (f: File | undefined) => {
+    if (!f) return;
+    if (!f.type.startsWith("image/")) { toast.error("Please select an image"); return; }
+    if (f.size > 10 * 1024 * 1024) { toast.error("Image too large (max 10MB)"); return; }
+    const r = new FileReader();
+    r.onload = () => setNewPhoto(r.result as string);
+    r.readAsDataURL(f);
+  };
 
   if (!plant) return <div className="p-8">Not found</div>;
 
