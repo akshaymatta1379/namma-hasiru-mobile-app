@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, MapPin, Calendar, Ruler, Camera, Share2, Sprout } from "lucide-react";
+import { ArrowLeft, MapPin, Calendar, Ruler, Camera, Share2, Sprout, Sparkles } from "lucide-react";
 import { mockPlants, statusMeta } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 
