@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
-import { ArrowLeft, Camera, MapPin, Sparkles, Sprout, TreeDeciduous } from "lucide-react";
+import { useRef, useState } from "react";
+import { ArrowLeft, Camera, MapPin, Sparkles, Sprout, TreeDeciduous, X } from "lucide-react";
 import { mockSpecies } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
@@ -11,6 +11,17 @@ function NewPlantPage() {
   const navigate = useNavigate();
   const [type, setType] = useState<"seed" | "sapling">("sapling");
   const [species, setSpecies] = useState<string | null>(null);
+  const [photo, setPhoto] = useState<string | null>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const onPick = (f: File | undefined) => {
+    if (!f) return;
+    if (!f.type.startsWith("image/")) { toast.error("Please select an image"); return; }
+    if (f.size > 10 * 1024 * 1024) { toast.error("Image too large (max 10MB)"); return; }
+    const reader = new FileReader();
+    reader.onload = () => setPhoto(reader.result as string);
+    reader.readAsDataURL(f);
+  };
 
   return (
     <div className="min-h-screen pb-12">
@@ -24,15 +35,45 @@ function NewPlantPage() {
 
       <div className="space-y-5 px-5 pt-4">
         {/* Camera */}
-        <button className="grid aspect-[4/3] w-full place-items-center rounded-3xl border-2 border-dashed border-primary/40 bg-[var(--gradient-earth)]">
-          <div className="text-center">
-            <div className="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-primary text-primary-foreground shadow-[var(--shadow-soft)]">
-              <Camera className="h-7 w-7" />
-            </div>
-            <p className="mt-3 font-display text-base font-semibold">Take a photo</p>
-            <p className="text-xs text-muted-foreground">Capture sapling + surroundings</p>
+        <input
+          ref={fileRef}
+          type="file"
+          accept="image/*"
+          capture="environment"
+          className="hidden"
+          onChange={(e) => onPick(e.target.files?.[0])}
+        />
+        {photo ? (
+          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl border border-border">
+            <img src={photo} alt="Captured sapling" className="h-full w-full object-cover" />
+            <button
+              onClick={() => setPhoto(null)}
+              className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-black/60 text-white"
+              aria-label="Remove photo"
+            >
+              <X className="h-4 w-4" />
+            </button>
+            <button
+              onClick={() => fileRef.current?.click()}
+              className="absolute bottom-3 right-3 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-foreground"
+            >
+              Retake
+            </button>
           </div>
-        </button>
+        ) : (
+          <button
+            onClick={() => fileRef.current?.click()}
+            className="grid aspect-[4/3] w-full place-items-center rounded-3xl border-2 border-dashed border-primary/40 bg-[var(--gradient-earth)]"
+          >
+            <div className="text-center">
+              <div className="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-primary text-primary-foreground shadow-[var(--shadow-soft)]">
+                <Camera className="h-7 w-7" />
+              </div>
+              <p className="mt-3 font-display text-base font-semibold">Take a photo</p>
+              <p className="text-xs text-muted-foreground">Capture sapling + surroundings</p>
+            </div>
+          </button>
+        )}
 
         {/* GPS */}
         <div className="flex items-center gap-3 rounded-2xl border border-border bg-card p-3">

@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ArrowLeft, Camera, Ruler } from "lucide-react";
 import { mockPlants, PlantStatus, statusMeta } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
@@ -15,6 +15,16 @@ function UpdatePage() {
   const navigate = useNavigate();
   const [status, setStatus] = useState<PlantStatus>("growing");
   const [height, setHeight] = useState("");
+  const [newPhoto, setNewPhoto] = useState<string | null>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+  const onPick = (f: File | undefined) => {
+    if (!f) return;
+    if (!f.type.startsWith("image/")) { toast.error("Please select an image"); return; }
+    if (f.size > 10 * 1024 * 1024) { toast.error("Image too large (max 10MB)"); return; }
+    const r = new FileReader();
+    r.onload = () => setNewPhoto(r.result as string);
+    r.readAsDataURL(f);
+  };
 
   if (!plant) return <div className="p-8">Not found</div>;
 
@@ -36,12 +46,20 @@ function UpdatePage() {
               <img src={plant.photo} alt="Before" className="aspect-square w-full object-cover" />
               <p className="bg-muted py-1 text-center text-[11px] font-medium">{plant.daysOld}d ago</p>
             </div>
-            <button className="grid aspect-square w-full place-items-center rounded-2xl border-2 border-dashed border-primary/40 bg-accent text-center">
-              <div>
-                <Camera className="mx-auto h-7 w-7 text-primary" />
-                <p className="mt-2 text-xs font-semibold text-primary">Capture now</p>
+            <input ref={fileRef} type="file" accept="image/*" capture="environment" className="hidden" onChange={(e) => onPick(e.target.files?.[0])} />
+            {newPhoto ? (
+              <div className="relative overflow-hidden rounded-2xl">
+                <img src={newPhoto} alt="Now" className="aspect-square w-full object-cover" />
+                <button onClick={() => fileRef.current?.click()} className="absolute bottom-2 right-2 rounded-full bg-white/95 px-2.5 py-1 text-[11px] font-semibold text-foreground">Retake</button>
               </div>
-            </button>
+            ) : (
+              <button onClick={() => fileRef.current?.click()} className="grid aspect-square w-full place-items-center rounded-2xl border-2 border-dashed border-primary/40 bg-accent text-center">
+                <div>
+                  <Camera className="mx-auto h-7 w-7 text-primary" />
+                  <p className="mt-2 text-xs font-semibold text-primary">Capture now</p>
+                </div>
+              </button>
+            )}
           </div>
         </section>
 

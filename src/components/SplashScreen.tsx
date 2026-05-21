@@ -26,8 +26,9 @@ export function SplashScreen({ children }: { children: React.ReactNode }) {
               <Leaf className="h-12 w-12 animate-pulse" strokeWidth={2.2} />
             </div>
             <div className="text-center animate-in fade-in slide-in-from-bottom-2 duration-700 delay-200 fill-mode-both">
-              <p className="font-display text-3xl font-bold tracking-tight">Namma Hasiru</p>
-              <p className="mt-1 text-[11px] uppercase tracking-[0.3em] opacity-80">Plant · Track · Grow</p>
+              <p className="text-[11px] uppercase tracking-[0.3em] opacity-80">Welcome to</p>
+              <p className="mt-1 font-display text-3xl font-bold tracking-tight">Namma Hasiru</p>
+              <p className="mt-2 text-[11px] uppercase tracking-[0.3em] opacity-80">Plant · Track · Grow</p>
             </div>
           </div>
         </div>
