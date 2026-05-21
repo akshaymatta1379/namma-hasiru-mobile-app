@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
-import { ArrowLeft, Camera, MapPin, Sparkles, Sprout, TreeDeciduous } from "lucide-react";
+import { useRef, useState } from "react";
+import { ArrowLeft, Camera, MapPin, Sparkles, Sprout, TreeDeciduous, X } from "lucide-react";
 import { mockSpecies } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
@@ -11,6 +11,17 @@ function NewPlantPage() {
   const navigate = useNavigate();
   const [type, setType] = useState<"seed" | "sapling">("sapling");
   const [species, setSpecies] = useState<string | null>(null);
+  const [photo, setPhoto] = useState<string | null>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const onPick = (f: File | undefined) => {
+    if (!f) return;
+    if (!f.type.startsWith("image/")) { toast.error("Please select an image"); return; }
+    if (f.size > 10 * 1024 * 1024) { toast.error("Image too large (max 10MB)"); return; }
+    const reader = new FileReader();
+    reader.onload = () => setPhoto(reader.result as string);
+    reader.readAsDataURL(f);
+  };
 
   return (
     <div className="min-h-screen pb-12">
