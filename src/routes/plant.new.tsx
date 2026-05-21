@@ -12,6 +12,8 @@ function NewPlantPage() {
   const [type, setType] = useState<"seed" | "sapling">("sapling");
   const [species, setSpecies] = useState<string | null>(null);
   const [photo, setPhoto] = useState<string | null>(null);
+  const [location, setLocation] = useState("");
+  const [coords, setCoords] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
 
   const onPick = (f: File | undefined) => {
